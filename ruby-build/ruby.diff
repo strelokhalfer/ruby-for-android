@@ -1,0 +1,46 @@
+diff -rNu ruby-2.0.0-p195.orig/eval_intern.h ruby-2.0.0-p195/eval_intern.h
+--- ruby-2.0.0-p195.orig/eval_intern.h	2013-06-16 23:55:03.967243789 +0200
++++ ruby-2.0.0-p195/eval_intern.h	2013-06-16 23:56:16.867243233 +0200
+@@ -195,7 +195,7 @@
+ VALUE rb_vm_cbase(void);
+ 
+ #ifndef CharNext		/* defined as CharNext[AW] on Windows. */
+-#define CharNext(p) ((p) + mblen((p), RUBY_MBCHAR_MAXSIZE))
++#define CharNext(p) ((p) + 1)
+ #endif
+ 
+ #if defined DOSISH || defined __CYGWIN__
+diff -rNu ruby-2.0.0-p195.orig/ext/nkf/nkf-utf8/nkf.h ruby-2.0.0-p195/ext/nkf/nkf-utf8/nkf.h
+--- ruby-2.0.0-p195.orig/ext/nkf/nkf-utf8/nkf.h	2013-06-16 23:55:03.999243789 +0200
++++ ruby-2.0.0-p195/ext/nkf/nkf-utf8/nkf.h	2013-06-16 23:56:44.495243022 +0200
+@@ -162,6 +162,7 @@
+ # endif
+ #endif
+ 
++#undef HAVE_LANGINFO_H
+ #ifdef HAVE_LANGINFO_H
+ #include <langinfo.h>
+ #endif
+diff -rNu ruby-2.0.0-p195.orig/include/ruby/intern.h ruby-2.0.0-p195/include/ruby/intern.h
+--- ruby-2.0.0-p195.orig/include/ruby/intern.h	2013-06-16 23:55:03.967243789 +0200
++++ ruby-2.0.0-p195/include/ruby/intern.h	2013-06-16 23:55:32.987243566 +0200
+@@ -36,6 +36,8 @@
+ #include <sys/types.h>
+ #endif
+ 
++#include <sys/select.h>
++
+ #include "ruby/st.h"
+ 
+ #if defined __GNUC__ && __GNUC__ >= 4
+diff -rNu ruby-2.0.0-p195.orig/process.c ruby-2.0.0-p195/process.c
+--- ruby-2.0.0-p195.orig/process.c	2013-06-16 23:55:04.027243787 +0200
++++ ruby-2.0.0-p195/process.c	2013-06-16 23:56:02.715243339 +0200
+@@ -17,6 +17,7 @@
+ #include "ruby/util.h"
+ #include "internal.h"
+ #include "vm_core.h"
++#undef HAVE_GRP_H
+ 
+ #include <stdio.h>
+ #include <errno.h>
