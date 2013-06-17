@@ -79,6 +79,7 @@ ruby_extras_r$(RELEASE).zip: .ruby.install.done
 	mkdir -p extras/ruby
 	mkdir -p extras/ruby/lib/ruby/2.0.0
 	cp -r rubyroot/lib/ruby/2.0.0/* extras/ruby/lib/ruby/2.0.0
+	cp android.rb extras/ruby/lib/ruby/2.0.0
 	rm -rf extras/ruby/lib/ruby/2.0.0/arm-linux-androideabi
 	(cd extras && zip -r ../ruby_extras_r$(RELEASE).zip ruby)
 
