@@ -52,7 +52,7 @@ public class RubyDescriptor implements InterpreterDescriptor {
 
   @Override
   public String getScriptCommand(Context context) {
-    return "";
+    return "%s";
   }
 
   @Override
