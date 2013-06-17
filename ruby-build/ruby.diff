@@ -1,6 +1,6 @@
 diff -rNu ruby-2.0.0-p195.orig/eval_intern.h ruby-2.0.0-p195/eval_intern.h
---- ruby-2.0.0-p195.orig/eval_intern.h	2013-06-16 23:55:03.967243789 +0200
-+++ ruby-2.0.0-p195/eval_intern.h	2013-06-16 23:56:16.867243233 +0200
+--- ruby-2.0.0-p195.orig/eval_intern.h	2013-06-17 13:17:45.578240489 +0200
++++ ruby-2.0.0-p195/eval_intern.h	2013-06-17 13:17:54.238240770 +0200
 @@ -195,7 +195,7 @@
  VALUE rb_vm_cbase(void);
  
@@ -11,8 +11,8 @@ diff -rNu ruby-2.0.0-p195.orig/eval_intern.h ruby-2.0.0-p195/eval_intern.h
  
  #if defined DOSISH || defined __CYGWIN__
 diff -rNu ruby-2.0.0-p195.orig/ext/nkf/nkf-utf8/nkf.h ruby-2.0.0-p195/ext/nkf/nkf-utf8/nkf.h
---- ruby-2.0.0-p195.orig/ext/nkf/nkf-utf8/nkf.h	2013-06-16 23:55:03.999243789 +0200
-+++ ruby-2.0.0-p195/ext/nkf/nkf-utf8/nkf.h	2013-06-16 23:56:44.495243022 +0200
+--- ruby-2.0.0-p195.orig/ext/nkf/nkf-utf8/nkf.h	2013-06-17 13:17:45.634240492 +0200
++++ ruby-2.0.0-p195/ext/nkf/nkf-utf8/nkf.h	2013-06-17 13:17:54.238240770 +0200
 @@ -162,6 +162,7 @@
  # endif
  #endif
@@ -21,9 +21,21 @@ diff -rNu ruby-2.0.0-p195.orig/ext/nkf/nkf-utf8/nkf.h ruby-2.0.0-p195/ext/nkf/nk
  #ifdef HAVE_LANGINFO_H
  #include <langinfo.h>
  #endif
+diff -rNu ruby-2.0.0-p195.orig/ext/socket/ancdata.c ruby-2.0.0-p195/ext/socket/ancdata.c
+--- ruby-2.0.0-p195.orig/ext/socket/ancdata.c	2013-06-17 13:17:45.626240493 +0200
++++ ruby-2.0.0-p195/ext/socket/ancdata.c	2013-06-17 13:18:12.526241348 +0200
+@@ -1054,7 +1054,7 @@
+ #        if defined(IPPROTO_IPV6)
+           case IPPROTO_IPV6:
+             switch (type) {
+-#            if defined(IPV6_PKTINFO) /* RFC 3542 */
++#            if defined(IPV6_PKTINFO) && defined(HAVE_TYPE_STRUCT_IN6_PKTINFO) /* RFC 3542 */
+               case IPV6_PKTINFO: inspected = anc_inspect_ipv6_pktinfo(level, type, data, ret); break;
+ #            endif
+             }
 diff -rNu ruby-2.0.0-p195.orig/include/ruby/intern.h ruby-2.0.0-p195/include/ruby/intern.h
---- ruby-2.0.0-p195.orig/include/ruby/intern.h	2013-06-16 23:55:03.967243789 +0200
-+++ ruby-2.0.0-p195/include/ruby/intern.h	2013-06-16 23:55:32.987243566 +0200
+--- ruby-2.0.0-p195.orig/include/ruby/intern.h	2013-06-17 13:17:45.662240495 +0200
++++ ruby-2.0.0-p195/include/ruby/intern.h	2013-06-17 13:17:54.242240770 +0200
 @@ -36,6 +36,8 @@
  #include <sys/types.h>
  #endif
@@ -34,8 +46,8 @@ diff -rNu ruby-2.0.0-p195.orig/include/ruby/intern.h ruby-2.0.0-p195/include/rub
  
  #if defined __GNUC__ && __GNUC__ >= 4
 diff -rNu ruby-2.0.0-p195.orig/process.c ruby-2.0.0-p195/process.c
---- ruby-2.0.0-p195.orig/process.c	2013-06-16 23:55:04.027243787 +0200
-+++ ruby-2.0.0-p195/process.c	2013-06-16 23:56:02.715243339 +0200
+--- ruby-2.0.0-p195.orig/process.c	2013-06-17 13:17:45.662240495 +0200
++++ ruby-2.0.0-p195/process.c	2013-06-17 13:17:54.242240770 +0200
 @@ -17,6 +17,7 @@
  #include "ruby/util.h"
  #include "internal.h"
