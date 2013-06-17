@@ -1,4 +1,4 @@
-.PHONY: fetch openssl ruby zips clean mrproper
+.PHONY: fetch openssl ruby zips clean mrproper clean_ruby
 
 RELEASE=3
 
@@ -29,6 +29,9 @@ mrproper: clean
 	rm -f ruby-$(RUBY_VERSION).tar.bz2
 	rm -f ruby_r$(RELEASE).zip
 	rm -f ruby_extras_r$(RELEASE).zip
+
+clean_ruby:
+	rm -f .ruby.done
 
 .fetch.done:
 	wget -c http://www.openssl.org/source/openssl-$(OPENSSL_VERSION).tar.gz
