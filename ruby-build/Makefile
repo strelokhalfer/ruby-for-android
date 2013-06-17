@@ -50,7 +50,7 @@ clean_ruby:
 	(cd ruby-$(RUBY_VERSION) && \
 		export CFLAGS="-I$(TOPDIR)/openssl-$(OPENSSL_VERSION)/include" && \
 		export LDFLAGS="-L$(TOPDIR)/openssl-$(OPENSSL_VERSION)" && \
-		./configure --target=arm-linux-androideabi --host=arm-linux-androideabi --prefix=$(TOPDIR)/rubyroot --enable-wide-getaddrinfo)
+		./configure --target=arm-linux-androideabi --host=arm-linux-androideabi --prefix=$(TOPDIR)/rubyroot --enable-wide-getaddrinfo --enable-shared)
 	(cd ruby-$(RUBY_VERSION) && patch -p1 < ../ruby.diff)
 	(cd ruby-$(RUBY_VERSION) && make main)
 	>.ruby.done
@@ -58,8 +58,6 @@ clean_ruby:
 .ruby.install.done: .ruby.done
 	rm -rf rubyroot
 	(cd ruby-$(RUBY_VERSION) && make install-nodoc)
-	find rubyroot -name *.so -exec arm-linux-androideabi-strip {} \;
-	arm-linux-androideabi-strip rubyroot/bin/ruby
 	> .ruby.install.done
 
 ruby_r$(RELEASE).zip: .ruby.install.done
@@ -70,7 +68,10 @@ ruby_r$(RELEASE).zip: .ruby.install.done
 	cp rubyroot/bin/irb interpreter/ruby/bin
 	mkdir -p interpreter/ruby/lib/ruby/2.0.0
 	cp -r rubyroot/lib/ruby/2.0.0/arm-linux-androideabi interpreter/ruby/lib/ruby/2.0.0
+	cp rubyroot/lib/libruby.so* interpreter/ruby/lib
 	cp openssl-$(OPENSSL_VERSION)/lib*.so* interpreter/ruby/lib
+	find interpreter -name *.so -exec arm-linux-androideabi-strip {} \;
+	arm-linux-androideabi-strip interpreter/ruby/bin/ruby
 	(cd interpreter && zip -r ../ruby_r$(RELEASE).zip ruby)
 
 ruby_extras_r$(RELEASE).zip: .ruby.install.done
