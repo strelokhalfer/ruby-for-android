@@ -1,20 +1,15 @@
 About
 =====
 
-This project allows to compile a native ruby interpreter for android. It's and interpreter for the Scripting Layer for Android (SL4A).
+This project aims to compile a native ruby interpreter for android. It's an interpreter for the [Scripting Layer for Android (SL4A)](http://code.google.com/p/android-scripting/).
 
 Preparation
 ===========
 
-1. Download the Android NDK here: http://developer.android.com/tools/sdk/ndk/index.html
+1. Download the Android NDK [here](http://developer.android.com/tools/sdk/ndk/index.html)
 2. Unpack the NDK
-3. Create a standalone toolchain using the following command:
-
-    $NDKDIR/build/tools/make-standalone-toolchain.sh --install-dir=/tmp/toolchain --platform=android-8
-
-4. Add the toolchain to your PATH:
-
-	export PATH=/tmp/toolchain/bin:$PATH
+3. Create a standalone toolchain using the following command: `$NDKDIR/build/tools/make-standalone-toolchain.sh --install-dir=/tmp/toolchain --platform=android-8`
+4. Add the toolchain to your PATH: `export PATH=/tmp/toolchain/bin:$PATH`
 
 Compilation
 ===========
